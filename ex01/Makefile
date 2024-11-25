@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 
+NAME = fixed_conversions
 SRC = main.cpp Fixed.cpp
 FLAGS = -Wall -Wextra -Werror -std=c++98
 CC = c++

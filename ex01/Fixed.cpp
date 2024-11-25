@@ -25,15 +25,8 @@ Fixed::Fixed(const int value)
 
 Fixed::Fixed(const float value)
 {
-	int	float_bits;
-	int	shift;
-
 	std::cout << "Float constructor called" << std::endl;
-	_value = value;
-	_value = _value << _fractionalBits;
-	float_bits = value - _value;
-	shift = _fractionalBits - log2(float_bits);
-	_value += float_bits << shift;
+	_value = roundf(value * (1 << _fractionalBits));
 }
 
 Fixed::Fixed(const Fixed &fixed)
@@ -58,11 +51,26 @@ Fixed& Fixed::operator=(const Fixed &fixed)
 
 int Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
 	return _value;
 }
 
 void Fixed::setRawBits(int const raw)
 {
 	_value = raw;
+}
+
+float Fixed::toFloat(void) const
+{
+	return _value / (float)(1 << _fractionalBits);
+}
+
+int	Fixed::toInt(void) const
+{
+	return _value >> _fractionalBits;
+}
+
+std::ostream &operator<<(std::ostream &out, const Fixed &fixed)
+{
+	out << fixed.toFloat();
+	return out;
 }
